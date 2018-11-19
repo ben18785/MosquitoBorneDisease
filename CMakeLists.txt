@@ -68,44 +68,44 @@ target_include_directories (mbd_main PRIVATE src)
 target_link_libraries (mbd_main PRIVATE mbd)
 
 # Clang tidy as optional static analyzer
-option(Template_USE_CLANG_TIDY "Use clang tidy for static analysis" OFF)
-if (Template_USE_CLANG_TIDY)
+option(MBD_USE_CLANG_TIDY "Use clang tidy for static analysis" OFF)
+if (MBD_USE_CLANG_TIDY)
     find_program(CLANG_TIDY_EXE NAMES "clang-tidy" "clang-tidy-6.0" "clang-tidy-5.0" "clang-tidy-4.0"
                  DOC "Path to clang-tidy executable")
     if(NOT CLANG_TIDY_EXE)
         message(STATUS "clang-tidy not found.")
     else()
         message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-        set_target_properties(mylib PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
+        set_target_properties(mbd PROPERTIES CXX_CLANG_TIDY "${CLANG_TIDY_EXE}")
     endif()
 endif()
 
 # LLVM AddressSanitizer to detecting memory errors
 # Note that there are many other sanitizers in LLVM to help detect errors, see
 # http://travistoptips.blogspot.co.uk/2015/11/sanitize-all-things.html
-option(Template_MEMCHECK "Use LLVM AddressSanitizer to detecting memory errors" OFF)
-if (Template_MEMCHECK)
+option(MBD_MEMCHECK "Use LLVM AddressSanitizer to detecting memory errors" OFF)
+if (MBD_MEMCHECK)
     if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
         message(STATUS "Configuring with LLVM AddressSanitizer")
-        set(Template_MEMCHECK_FLAGS -fno-optimize-sibling-calls
+        set(MBD_MEMCHECK_FLAGS -fno-optimize-sibling-calls
             -fsanitize=address
             -fsanitize-address-use-after-scope
             )
-        target_compile_options(mylib PUBLIC -O1 -g -fno-omit-frame-pointer ${Template_MEMCHECK_FLAGS})
-        target_link_libraries(mylib PUBLIC -g ${Template_MEMCHECK_FLAGS})
+        target_compile_options(mbd PUBLIC -O1 -g -fno-omit-frame-pointer ${MBD_MEMCHECK_FLAGS})
+        target_link_libraries(mbd PUBLIC -g ${MBD_MEMCHECK_FLAGS})
     else()
-        message(FATAL_ERROR "clang compiler required with Template_MEMCHECK: found ${CMAKE_CXX_COMPILER_ID}")
+        message(FATAL_ERROR "clang compiler required with MBD_MEMCHECK: found ${CMAKE_CXX_COMPILER_ID}")
     endif()
 endif()
 
 # Setup coverage testing for GCC or Clang
-option(Template_ENABLE_COVERAGE "Enable coverage reporting for GCC or Clang" FALSE)
-if (Template_ENABLE_COVERAGE)
+option(MBD_ENABLE_COVERAGE "Enable coverage reporting for GCC or Clang" FALSE)
+if (MBD_ENABLE_COVERAGE)
     if (${CMAKE_CXX_COMPILER_ID} STREQUAL "GNU" OR ${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
         message(STATUS "Configuring with coverage")
-        target_compile_options(mylib PUBLIC --coverage -O0)
-        target_link_libraries(mylib PUBLIC --coverage)
+        target_compile_options(mbd PUBLIC --coverage -O0)
+        target_link_libraries(mbd PUBLIC --coverage)
     else()
-        message(FATAL_ERROR "GCC or Clang required with Template_ENABLE_COVERAGE: found ${CMAKE_CXX_COMPILER_ID}")
+        message(FATAL_ERROR "GCC or Clang required with MBD_ENABLE_COVERAGE: found ${CMAKE_CXX_COMPILER_ID}")
     endif()
 endif()
