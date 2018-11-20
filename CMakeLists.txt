@@ -53,7 +53,7 @@ enable_testing ()
 # todo: remove this option when travis standard libraries all know about std::uncaught_exceptions
 option(TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS "Some travis builds do not have std::uncaught_exceptions" OFF)
 if (TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS)
-    add_compile_definitions(CATCH_CONFIG_NO_CPP17_UNCAUGHT_EXCEPTIONS)
+    add_definitions(-DCATCH_CONFIG_NO_CPP17_UNCAUGHT_EXCEPTIONS)
 endif ()
 
 add_executable (
