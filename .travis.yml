@@ -28,8 +28,7 @@ matrix:
         - lcov
     env:
     - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
-    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE
-      -D CMAKE_BUILD_TYPE=Debug"
+    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE -D CMAKE_BUILD_TYPE=Debug -D TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS=ON"
 
   # GCC 6
   - os: linux
@@ -43,8 +42,7 @@ matrix:
         - lcov
     env:
     - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6"
-    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE
-      -D CMAKE_BUILD_TYPE=Debug"
+    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE -D CMAKE_BUILD_TYPE=Debug -D TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS=ON"
 
   # GCC 7
   - os: linux
@@ -58,8 +56,7 @@ matrix:
         - lcov
     env:
     - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE
-      -D CMAKE_BUILD_TYPE=Debug"
+    - CMAKE_OPTNS="-D MBD_ENABLE_COVERAGE:BOOL=TRUE -D CMAKE_BUILD_TYPE=Debug -D TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS=ON"
 
   # Clang 4.0
   - os: linux
@@ -73,9 +70,7 @@ matrix:
         - libboost-dev
     env:
     - MATRIX_EVAL="CC=clang-4.0 && CXX=clang++-4.0"
-    - CMAKE_OPTNS="-D MBD_USE_CLANG_TIDY:BOOL=TRUE
-      -D MBD_MEMCHECK:BOOL=TRUE
-      -D CMAKE_BUILD_TYPE=Debug"
+    - CMAKE_OPTNS="-D MBD_USE_CLANG_TIDY:BOOL=TRUE -D MBD_MEMCHECK:BOOL=TRUE -D CMAKE_BUILD_TYPE=Debug -D TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS=ON"
 
   # Clang 5.0
   - os: linux
@@ -89,9 +84,7 @@ matrix:
         - libboost-dev
     env:
     - MATRIX_EVAL="CC=clang-5.0 && CXX=clang++-5.0"
-    - CMAKE_OPTNS="-D MBD_USE_CLANG_TIDY:BOOL=TRUE
-      -D MBD_MEMCHECK:BOOL=TRUE
-      -D CMAKE_BUILD_TYPE=Debug"
+    - CMAKE_OPTNS="-D MBD_USE_CLANG_TIDY:BOOL=TRUE -D MBD_MEMCHECK:BOOL=TRUE -D CMAKE_BUILD_TYPE=Debug -D TURN_OFF_CATCH_CPP17_UNCAUGHT_EXCEPTIONS=ON"
 
 before_install:
 - eval "${MATRIX_EVAL}"
